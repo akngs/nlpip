@@ -1,0 +1,2 @@
+export PATH=.venv/bin:bins:$PATH
+export OPENAI_API_KEY=

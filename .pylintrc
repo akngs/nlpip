@@ -1,0 +1,19 @@
+[MASTER]
+disable=
+    C0114, # missing-module-docstring
+    C0115, # missing-class-docstring
+    C0116, # missing-function-docstring
+    C2401, # non-ascii-name
+    C0415, # import-outside-toplevel
+    R0903, # too-few-public-methods
+    R0902, # too-many-instance-attributes
+    R0913, # too-many-arguments
+    R0801, # duplicate-code
+    W0511, # fixme
+    W0702, # bare-except
+    W3101, # missing-timeout
+
+good-names-rgxs=^[_a-z][_a-z0-9]?$ # allow 1 or 2 length variable names
+
+[FORMAT]
+max-line-length=120
