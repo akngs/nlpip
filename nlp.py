@@ -15,16 +15,20 @@ class CLI:
     def run(self, prompt):
         """Run a prompt"""
         with open(os.path.join("prompts", f"{prompt}.txt"), encoding="utf-8") as f:
-            prompt_template = f.read()
-            input_text = "\n".join(sys.stdin.readlines())
-            prompt = self._merge_command(prompt_template, input_text)
+            template = f.read()
+            stdin_text = "\n".join(sys.stdin.readlines())
+            prompt = self._merge_template(template, stdin_text)
 
         answer = self._ask(prompt)
         print(answer)
 
-    def _merge_command(self, template, input_text):
-        prompt = template + "\n--- START ---\n" + input_text + "\n--- END ---\n"
-        return prompt
+    def _merge_template(self, template, stdin_text):
+        if template.find("{{STDIN}}") != -1:
+            merged = template.replace("{{STDIN}}", stdin_text)
+        else:
+            merged = template + "\n--- START ---\n" + stdin_text + "\n--- END ---\n"
+
+        return merged
 
     def _ask(self, prompt):
         params = {
