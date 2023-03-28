@@ -46,13 +46,11 @@ class CLI:
 
     def _ask(self, prompt):
         params = {
-            "model": "text-davinci-003",
-            "prompt": prompt,
-            "temperature": 0,
-            "max_tokens": 3000,
-            "top_p": 1.0,
-            "frequency_penalty": 0.5,
-            "presence_penalty": 0.0,
+            "model": "gpt-3.5-turbo",
+            "messages": [
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt},
+            ],
         }
 
         cache_key = hashlib.sha256(json.dumps(params).encode("utf-8")).hexdigest()
@@ -60,8 +58,8 @@ class CLI:
         if cached_answer:
             return cached_answer
 
-        res = openai.Completion.create(**params)
-        answer = res["choices"][0]["text"].strip()
+        res = openai.ChatCompletion.create(**params)
+        answer = res["choices"][0]["message"]["content"].strip()
         self._save_cache(cache_key, answer)
 
         return answer
