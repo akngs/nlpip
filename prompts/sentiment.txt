@@ -1,1 +1,1 @@
-Decide whether a text's sentiment is positive, neutral, or negative.
+Decide whether sentiment is positive, neutral, or negative.
