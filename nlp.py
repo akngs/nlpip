@@ -1,6 +1,7 @@
 import hashlib
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -19,7 +20,7 @@ class CLI:
         stdin_text = "\n".join(sys.stdin.readlines())
         prompt = self._merge_template(template, stdin_text)
         answer = self._ask(prompt)
-        print(answer)
+        return re.sub(r"\n\n", "\n", answer)
 
     def _load_template(self, prompt_id):
         user_path = os.path.join(
@@ -48,7 +49,17 @@ class CLI:
         params = {
             "model": "gpt-3.5-turbo",
             "messages": [
-                {"role": "system", "content": "You are a helpful assistant."},
+                {
+                    "role": "system",
+                    "content": "You should answer in clear, concise way.",
+                },
+                {
+                    "role": "system",
+                    "content": (
+                        "Sentences like '--- START ---' and '--- END ---' are just separators "
+                        "for you. Never include them in your answer."
+                    ),
+                },
                 {"role": "user", "content": prompt},
             ],
         }
@@ -68,7 +79,7 @@ class CLI:
         cache_dir = os.path.join(".cache", cache_key[:2])
         os.makedirs(cache_dir, exist_ok=True)
 
-        cache_path = os.path.join(cache_dir, cache_key[:2])
+        cache_path = os.path.join(cache_dir, cache_key[2:])
         if not os.path.exists(cache_path):
             return None
 
@@ -79,7 +90,7 @@ class CLI:
         cache_dir = os.path.join(".cache", cache_key[:2])
         os.makedirs(cache_dir, exist_ok=True)
 
-        cache_path = os.path.join(cache_dir, cache_key[:2])
+        cache_path = os.path.join(cache_dir, cache_key[2:])
         with open(cache_path, "w", encoding="utf-8") as f:
             f.write(answer)
 
