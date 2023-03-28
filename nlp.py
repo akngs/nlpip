@@ -2,6 +2,7 @@ import hashlib
 import json
 import os
 import sys
+from pathlib import Path
 
 import fire
 import openai
@@ -12,15 +13,28 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 class CLI:
     """Natural Language Pipe"""
 
-    def run(self, prompt):
+    def run(self, prompt_id):
         """Run a prompt"""
-        with open(os.path.join("prompts", f"{prompt}.txt"), encoding="utf-8") as f:
-            template = f.read()
-            stdin_text = "\n".join(sys.stdin.readlines())
-            prompt = self._merge_template(template, stdin_text)
-
+        template = self._load_template(prompt_id)
+        stdin_text = "\n".join(sys.stdin.readlines())
+        prompt = self._merge_template(template, stdin_text)
         answer = self._ask(prompt)
         print(answer)
+
+    def _load_template(self, prompt_id):
+        user_path = os.path.join(
+            str(Path.home()), ".nlpipe", "prompts", f"{prompt_id}.txt"
+        )
+        if os.path.exists(user_path):
+            with open(user_path, encoding="utf-8") as f:
+                return f.read()
+
+        builtin_path = os.path.join("prompts", f"{prompt_id}.txt")
+        if os.path.exists(builtin_path):
+            with open(builtin_path, encoding="utf-8") as f:
+                return f.read()
+
+        raise ValueError(f"Prompt {prompt_id} not found")
 
     def _merge_template(self, template, stdin_text):
         if template.find("{{STDIN}}") != -1:
