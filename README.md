@@ -6,7 +6,7 @@ in natural language.
 
 Here's a demo:
 
-<img width="600" src="nlpip.svg" alt="screen recording">
+<img width="600" src="https://github.com/akngs/nlpip/raw/main/nlpip.svg" alt="screen recording">
 
 ## Installation
 
@@ -14,8 +14,7 @@ First, you need to install `nlpip` using `pip`:
 
     pip install nlpip
 
-Then, you need to obtain your OpenAI's API key and set it as an environment
-variable:
+Then, set your OpenAI's API key as an environment variable:
 
     export OPENAI_API_KEY=WRITE_YOUR_KEY_HERE
 
