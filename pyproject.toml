@@ -1,0 +1,62 @@
+[project]
+name = "nlpip"
+
+# https://www.python.org/dev/peps/pep-0440/
+version = "0.1.0"
+
+# https://packaging.python.org/specifications/core-metadata/#summary
+description = "A unix pipeline utility based on LLM"
+
+readme = "README.md"
+
+requires-python = ">=3.7"
+
+license = {file = "LICENSE"}
+
+keywords = ["nlp", "llm", "chatgpt", "openai", "unix", "pipeline"]
+
+authors = [
+  {name = "Alan Kang", email = "jania902@gmail.com" }
+]
+
+maintainers = [
+  {name = "Alan Kang", email = "jania902@gmail.com" }
+]
+
+# https://pypi.org/classifiers/
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: End Users/Desktop",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Text Processing",
+  "Topic :: Text Processing :: General",
+]
+
+dependencies = ["openai"]
+
+[project.optional-dependencies]
+dev = ["black", "pylint"]
+
+[project.urls]
+"Homepage" = "https://github.com/akngs/nlpip"
+"Bug Reports" = "https://github.com/akngs/nlpip/issues"
+"Source" = "https://github.com/akngs/nlpip"
+
+[project.scripts]
+nlp = "nlpip:main"
+nlpip = "nlpip:main"
+
+[build-system]
+# https://pip.pypa.io/en/stable/reference/pip/#pep-517-and-518-support
+requires = ["setuptools>=43.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
