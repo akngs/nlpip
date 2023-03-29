@@ -1,4 +1,4 @@
-# nlpip A unix pipeline utils based on LLM
+# nlpip - A natural language based unix pipeline utility
 
 `nlpip` takes a text written in natural language as input, and performs a
 specified command also written in natural language, and then outputs the result

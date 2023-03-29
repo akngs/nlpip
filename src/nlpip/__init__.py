@@ -8,6 +8,7 @@ from pathlib import Path
 import openai
 
 HOME = str(Path.home())
+SCRIPT_HOME = os.path.dirname(os.path.realpath(__file__))
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -28,7 +29,7 @@ def _load_template(prompt_id):
         with open(user_path, encoding="utf-8") as f:
             return f.read()
 
-    builtin_path = os.path.join("prompts", f"{prompt_id}.txt")
+    builtin_path = os.path.join(SCRIPT_HOME, "prompts", f"{prompt_id}.txt")
     if os.path.exists(builtin_path):
         with open(builtin_path, encoding="utf-8") as f:
             return f.read()

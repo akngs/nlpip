@@ -2,10 +2,10 @@
 name = "nlpip"
 
 # https://www.python.org/dev/peps/pep-0440/
-version = "0.1.1"
+version = "0.1.4"
 
 # https://packaging.python.org/specifications/core-metadata/#summary
-description = "A unix pipeline utility based on LLM"
+description = "A natural language based unix pipeline utility"
 
 readme = "README.md"
 
@@ -46,6 +46,12 @@ dependencies = ["openai"]
 
 [project.optional-dependencies]
 dev = ["black", "pylint"]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [project.urls]
 "Homepage" = "https://github.com/akngs/nlpip"
