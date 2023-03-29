@@ -10,13 +10,25 @@ import openai
 HOME = str(Path.home())
 SCRIPT_HOME = os.path.dirname(os.path.realpath(__file__))
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
-
 def main():
     """Run a prompt"""
+    if len(sys.argv) != 2:
+        print("Usage: nlpip <prompt_id>", file=sys.stderr)
+        sys.exit(1)
     prompt_id = sys.argv[1]
-    template = _load_template(prompt_id)
+
+    api_key = os.getenv("OPENAI_API_KEY", None)
+    if api_key is None:
+        print("Please set OPENAI_API_KEY environment variable", file=sys.stderr)
+        sys.exit(1)
+    openai.api_key = api_key
+
+    try:
+        template = _load_template(prompt_id)
+    except ValueError as e:
+        print(e, file=sys.stderr)
+        sys.exit(1)
+
     stdin_text = "\n".join(sys.stdin.readlines())
     prompt = _merge_template(template, stdin_text)
     answer = _ask(prompt)
@@ -34,7 +46,7 @@ def _load_template(prompt_id):
         with open(builtin_path, encoding="utf-8") as f:
             return f.read()
 
-    raise ValueError(f"Prompt {prompt_id} not found")
+    raise ValueError(f"Prompt '{prompt_id}'` not found")
 
 
 def _merge_template(template, stdin_text):
