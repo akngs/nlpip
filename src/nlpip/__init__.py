@@ -32,7 +32,7 @@ def main():
     stdin_text = "\n".join(sys.stdin.readlines())
     prompt = _merge_template(template, stdin_text)
     answer = _ask(prompt)
-    return re.sub(r"\n\n", "\n", answer)
+    print(re.sub(r"\n\n", "\n", answer))
 
 
 def _load_template(prompt_id):

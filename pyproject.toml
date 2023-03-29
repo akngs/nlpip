@@ -2,7 +2,7 @@
 name = "nlpip"
 
 # https://www.python.org/dev/peps/pep-0440/
-version = "0.1.5"
+version = "0.1.6"
 
 # https://packaging.python.org/specifications/core-metadata/#summary
 description = "A natural language based unix pipeline utility"
