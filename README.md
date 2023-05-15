@@ -18,6 +18,11 @@ Then, set your OpenAI's API key as an environment variable:
 
     export OPENAI_API_KEY=WRITE_YOUR_KEY_HERE
 
+Default model is `gpt-3.5-turbo`. If you want to use a different model, you can set it as an
+environment variable. For example, if you want to use `gpt-4` model, you can run:
+
+    export OPENAI_MODEL=gpt-4
+
 ## How to use
 
 `nlpip` or just `nlp` for short, provides following default commands:

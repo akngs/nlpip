@@ -9,6 +9,9 @@ import openai
 
 HOME = str(Path.home())
 SCRIPT_HOME = os.path.dirname(os.path.realpath(__file__))
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", None)
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
+
 
 def main():
     """Run a prompt"""
@@ -17,11 +20,10 @@ def main():
         sys.exit(1)
     prompt_id = sys.argv[1]
 
-    api_key = os.getenv("OPENAI_API_KEY", None)
-    if api_key is None:
+    if OPENAI_API_KEY is None:
         print("Please set OPENAI_API_KEY environment variable", file=sys.stderr)
         sys.exit(1)
-    openai.api_key = api_key
+    openai.api_key = OPENAI_API_KEY
 
     try:
         template = _load_template(prompt_id)
@@ -53,24 +55,21 @@ def _merge_template(template, stdin_text):
     if template.find("{{STDIN}}") != -1:
         merged = template.replace("{{STDIN}}", stdin_text)
     else:
-        merged = template + "\n--- START ---\n" + stdin_text + "\n--- END ---\n"
+        merged = template + "\n```" + stdin_text + "```\n"
 
     return merged
 
 
 def _ask(prompt):
     params = {
-        "model": "gpt-3.5-turbo",
+        "model": OPENAI_MODEL,
         "messages": [
             {
                 "role": "system",
-                "content": "You should answer in clear, concise way.",
-            },
-            {
-                "role": "system",
                 "content": (
-                    "Sentences like '--- START ---' and '--- END ---' are just separators "
-                    "for you. Never include them in your answer."
+                    "You should answer in clear and concise way. "
+                    "Text enclosed by three backticks like ```THIS``` is the prompt provided by "
+                    "the user."
                 ),
             },
             {"role": "user", "content": prompt},

@@ -1,5 +1,5 @@
 {
-    "python.formatting.provider": "black",
+    "python.formatting.provider": "none",
     "python.formatting.blackPath": ".venv/bin/black",
     "python.linting.pylintEnabled": true,
     "python.linting.pylintPath": ".venv/bin/pylint",
@@ -9,6 +9,7 @@
     "[python]": {
         "editor.codeActionsOnSave": {
             "source.organizeImports": true
-        }
+        },
+        "editor.defaultFormatter": "ms-python.black-formatter"
     }
 }
